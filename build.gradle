@@ -16,12 +16,23 @@ repositories {
 }
 
 def lombokVersion = "1.18.26"
+def mapStructVersion = "1.5.5.Final"
 
 dependencies {
+
 	compileOnly("org.projectlombok:lombok:${lombokVersion}")
 	annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+//	implementation("joda-time:joda-time:2.12.5")
+
+	implementation("org.mapstruct:mapstruct:${mapStructVersion}")
+	annotationProcessor("org.mapstruct:mapstruct-processor:${mapStructVersion}")
+
+	testImplementation("junit:junit:4.13.2")
+	testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.9.2")
+
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 }
