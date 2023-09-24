@@ -1,14 +1,19 @@
-package ru.otus.example.cleancode;
+package ru.otus.example.cleancode.lesson5.bulky.services;
+
+import org.junit.Test;
 
 import ru.otus.example.cleancode.lesson5.bulky.dtos.BankTransactionDto;
-import ru.otus.example.cleancode.lesson5.compact.services.InsuranceCompanyIntegrationService;
+import ru.otus.example.cleancode.lesson5.bulky.dtos.InsuranceCompanyDto;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public class CleanCodeMainApplication {
+import static org.junit.Assert.assertEquals;
 
-    public static void main(String[] args) {
+public class InsuranceCompanyIntegrationServiceTest {
+
+    @Test
+    public void mustReturnCorrectSendingResult() {
 
         InsuranceCompanyIntegrationService insuranceCompanyIntegrationService = new InsuranceCompanyIntegrationService();
 
@@ -18,8 +23,9 @@ public class CleanCodeMainApplication {
         bankTransactionDto.setActive(true);
         bankTransactionDto.setAmount(BigDecimal.valueOf(100));
 
-        System.out.println(insuranceCompanyIntegrationService.transferBankTransaction(bankTransactionDto));
+        String result = insuranceCompanyIntegrationService.transferBankTransaction(bankTransactionDto);
 
+        assertEquals(bankTransactionDto.getTransactionId() + "_transaction1", result);
     }
 
 }

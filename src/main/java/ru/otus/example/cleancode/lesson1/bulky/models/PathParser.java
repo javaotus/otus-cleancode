@@ -1,0 +1,9 @@
+package ru.otus.example.cleancode.lesson1.bulky.models;
+
+public class PathParser {
+
+    public static String render(WikiPagePath wikiPagePath) {
+        return "rendered!";
+    }
+
+}
