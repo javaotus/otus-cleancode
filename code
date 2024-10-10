@@ -1,0 +1,29 @@
+    public static void includeTeardownPages(PageData pageData, boolean includeSuiteSetup, WikiPage wikiPage, StringBuilder buffer) {
+        includeSpecialPages(pageData, includeSuiteSetup, wikiPage, buffer, "TearDown", "SUITE_TEARDOWN_NAME", "-teardown");
+    }
+
+    public static void includeSetupPages(PageData pageData, boolean includeSuiteSetup, WikiPage wikiPage, StringBuilder buffer) {
+        includeSpecialPages(pageData, includeSuiteSetup, wikiPage, buffer, "SetUp", "SuiteResponder", "-setup");
+    }
+
+    private static void appendIncludeDirective(WikiPage page, WikiPage wikiPage, StringBuilder buffer, String directive) {
+        if (page != null) {
+            WikiPagePath pagePath = wikiPage.getPageCrawler().getFullPath(page);
+            String pagePathName = PathParser.render(pagePath);
+            buffer.append("!include ").append(directive).append(" .").append(pagePathName).append("\n");
+        }
+    }
+	
+	private static void includeSpecialPages(PageData pageData, boolean includeSuiteSetup, WikiPage wikiPage, StringBuilder buffer,
+                                           String setupPageName, String suiteSetupPageName, String directive) {
+        if (pageData.hasAttribute("Test")) {
+
+            WikiPage specialPage = PageCrawlerImpl.getInheritedPage(setupPageName, wikiPage);
+            appendIncludeDirective(specialPage, wikiPage, buffer, directive);
+
+            if (includeSuiteSetup) {
+                WikiPage suitePage = PageCrawlerImpl.getInheritedPage(suiteSetupPageName, wikiPage);
+                appendIncludeDirective(suitePage, wikiPage, buffer, directive);
+            }
+        }
+    }
